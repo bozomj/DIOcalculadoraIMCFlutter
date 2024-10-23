@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           Pessoa? pessoa =
-              await navigatorPush(context: context, page: const MyForm());
+              await navigatorPush(context: context, page: MyForm());
           if (pessoa != null) pessoas.add(pessoa);
           setState(() {});
         },

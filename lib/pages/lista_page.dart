@@ -1,17 +1,24 @@
 import 'dart:developer';
 
 import 'package:calculadora_imc/model/pessoa.dart';
+import 'package:calculadora_imc/pages/my_form.dart';
+import 'package:calculadora_imc/utils/mynavigator.dart';
 import 'package:calculadora_imc/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class ListaPage extends StatelessWidget {
+class ListaPage extends StatefulWidget {
   final List<Pessoa> pessoas;
 
   const ListaPage({required this.pessoas, super.key});
 
   @override
+  State<ListaPage> createState() => _ListaPageState();
+}
+
+class _ListaPageState extends State<ListaPage> {
+  @override
   Widget build(BuildContext context) {
-    return (pessoas.isEmpty)
+    return (widget.pessoas.isEmpty)
         ? const Center(
             child: Text(
               "Nenhuma pessoa cadastrada",
@@ -19,9 +26,9 @@ class ListaPage extends StatelessWidget {
             ),
           )
         : ListView.builder(
-            itemCount: pessoas.length,
+            itemCount: widget.pessoas.length,
             itemBuilder: (context, index) {
-              Pessoa pessoa = pessoas[index];
+              Pessoa pessoa = widget.pessoas[index];
               log(pessoa.classificacao.toString());
               return Card(
                 color: colorIMC[pessoa.classificacao],
@@ -34,13 +41,14 @@ class ListaPage extends StatelessWidget {
                             title: Text(pessoa.nome),
                             actions: [
                               TextButton(
-                                onPressed: () => Navigator.pop(context),
+                                onPressed: () => editarPessoa(pessoa, index),
                                 child: const Text("Editar"),
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
-                                  pessoas.remove(pessoa);
+                                  widget.pessoas.remove(pessoa);
+                                  setState(() {});
                                 },
                                 child: const Text("Excluir"),
                               ),
@@ -71,5 +79,19 @@ class ListaPage extends StatelessWidget {
               );
             },
           );
+  }
+
+  editarPessoa(Pessoa pessoa, int index) async {
+    Navigator.pop(context);
+    Pessoa? newpessoa = await navigatorPush(
+        context: context,
+        page: MyForm(
+          pessoa: pessoa,
+        ));
+
+    if (newpessoa != null) {
+      widget.pessoas[index] = newpessoa;
+      setState(() {});
+    }
   }
 }

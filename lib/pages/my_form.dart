@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:calculadora_imc/model/pessoa.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class MyForm extends StatefulWidget {
-  const MyForm({super.key});
+  Pessoa? pessoa;
+  MyForm({this.pessoa, super.key});
 
   @override
   State<MyForm> createState() => _MyFormState();
@@ -17,6 +15,14 @@ class _MyFormState extends State<MyForm> {
   TextEditingController alturaController = TextEditingController();
 
   TextEditingController pesoController = TextEditingController();
+  @override
+  void initState() {
+    nomeController.text = widget.pessoa?.nome ?? "";
+    alturaController.text = widget.pessoa?.altura.toString() ?? "";
+    pesoController.text = widget.pessoa?.peso.toString() ?? "";
+
+    super.initState();
+  }
 
   String nome = '';
   double altura = 0;
