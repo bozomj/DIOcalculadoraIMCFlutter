@@ -22,3 +22,34 @@ Map<String, dynamic> colorIMC = {
   "Obesidade Grau II": Colors.amber[700],
   "Obesidade Grau III": Colors.amber[900],
 };
+
+// funcao recebe uma datetime e retorna data do brasil por extenso
+String formatarData(String txt) {
+  int? datetime = int.tryParse(txt);
+  var data = DateTime.fromMillisecondsSinceEpoch(datetime ?? 0);
+  final diasDaSemana = [
+    'domingo',
+    'segunda-feira',
+    'terça-feira',
+    'quarta-feira',
+    'quinta-feira',
+    'sexta-feira',
+    'sábado'
+  ];
+  final meses = [
+    'janeiro',
+    'fevereiro',
+    'março',
+    'abril',
+    'maio',
+    'junho',
+    'julho',
+    'agosto',
+    'setembro',
+    'outubro',
+    'novembro',
+    'dezembro'
+  ];
+
+  return '${diasDaSemana[data.weekday - 1]} ${data.day} de ${meses[data.month - 1]} de ${data.year}';
+}

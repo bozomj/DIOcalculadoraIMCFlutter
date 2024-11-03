@@ -1,3 +1,7 @@
+import 'package:calculadora_imc/database/database_sqflite.dart';
+import 'package:calculadora_imc/database/shared_db.dart';
+import 'package:sqflite/sqflite.dart';
+
 class Pessoa {
   String _nome;
   String? _classificacaoIMC;
@@ -23,8 +27,43 @@ class Pessoa {
   double? get imc => _imc;
   String? get classificacao => _classificacaoIMC;
 
+  set peso(p) => _peso = p;
+
+  get calculoMap => {
+        "data": DateTime.now().millisecondsSinceEpoch,
+        "imc": imc,
+        "peso": peso,
+        "classificacao": classificacao
+      };
+
   calcularIMC() {
     _imc = _peso / (_altura * _altura);
+  }
+
+  salvar() async {
+    SharedDB? db = SharedDB();
+
+    await db.salvar(this);
+  }
+
+  Future salvarCalculo() async {
+    Database? db = await DatabaseSqFlite().db;
+
+    try {
+      return await db!.insert('calculos_imc', calculoMap);
+    } catch (e) {
+      throw Exception('Erro ao salvar calculo IMC: $e');
+    }
+  }
+
+  Future<List<Map>> getAllCalculos() async {
+    Database? db = await DatabaseSqFlite().db;
+
+    try {
+      return await db!.query('calculos_imc', orderBy: 'data');
+    } catch (e) {
+      throw Exception("Erro ao buscar calculos: $e");
+    }
   }
 
   classificarIMC() {

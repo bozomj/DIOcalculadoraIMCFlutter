@@ -10,14 +10,11 @@ class MyForm extends StatefulWidget {
 }
 
 class _MyFormState extends State<MyForm> {
-  TextEditingController nomeController = TextEditingController();
-
   TextEditingController alturaController = TextEditingController();
 
   TextEditingController pesoController = TextEditingController();
   @override
   void initState() {
-    nomeController.text = widget.pessoa?.nome ?? "";
     alturaController.text = widget.pessoa?.altura.toString() ?? "";
     pesoController.text = widget.pessoa?.peso.toString() ?? "";
 
@@ -42,20 +39,11 @@ class _MyFormState extends State<MyForm> {
           children: [
             const Padding(padding: const EdgeInsets.all(16)),
             Text(
-              "Informe os dados pessoais",
+              "Calcular IMC",
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.lightGreen[900]),
-            ),
-            ListTile(
-              title: TextFormField(
-                validator: _validarNome,
-                controller: nomeController,
-                decoration: const InputDecoration(
-                  labelText: "Nome",
-                ),
-              ),
             ),
             ListTile(
               title: TextFormField(
@@ -105,7 +93,6 @@ class _MyFormState extends State<MyForm> {
   }
 
   Future salvarCalcular() async {
-    nome = nomeController.text.trim();
     altura = formateNumber(alturaController.text);
     peso = formateNumber(pesoController.text);
 

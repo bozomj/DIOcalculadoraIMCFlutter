@@ -8,3 +8,9 @@ navigatorPush({required BuildContext context, required Widget page}) async {
     ),
   );
 }
+
+navigatorPushReplacement(
+    {required BuildContext context, required Widget page}) async {
+  Navigator.pushAndRemoveUntil(
+      context, MaterialPageRoute(builder: (context) => page), (v) => false);
+}
