@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:calculadora_imc/model/pessoa.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

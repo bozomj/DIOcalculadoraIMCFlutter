@@ -30,6 +30,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    getUser();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: const Text("Calculadora IMC")),
@@ -85,7 +86,7 @@ class _HomeState extends State<Home> {
     } catch (e) {
       log(e.toString());
     }
-
+    setState(() {});
     return rt;
   }
 

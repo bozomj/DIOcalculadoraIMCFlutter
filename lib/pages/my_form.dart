@@ -2,8 +2,8 @@ import 'package:calculadora_imc/model/pessoa.dart';
 import 'package:flutter/material.dart';
 
 class MyForm extends StatefulWidget {
-  Pessoa? pessoa;
-  MyForm({this.pessoa, super.key});
+  final Pessoa? pessoa;
+  const MyForm({this.pessoa, super.key});
 
   @override
   State<MyForm> createState() => _MyFormState();
@@ -37,7 +37,7 @@ class _MyFormState extends State<MyForm> {
         key: formKey,
         child: Column(
           children: [
-            const Padding(padding: const EdgeInsets.all(16)),
+            const Padding(padding: EdgeInsets.all(16)),
             Text(
               "Calcular IMC",
               style: TextStyle(
@@ -77,9 +77,11 @@ class _MyFormState extends State<MyForm> {
                       child: const Text("Cancelar")),
                   const VerticalDivider(),
                   ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         salvarCalcular().then((pessoa) {
-                          if (pessoa != null) Navigator.pop(context, pessoa);
+                          if (pessoa != null && context.mounted) {
+                            Navigator.pop(context, pessoa);
+                          }
                         });
                       },
                       child: const Text("Salvar")),
@@ -128,27 +130,24 @@ class _MyFormState extends State<MyForm> {
     pessoa.classificarIMC();
   }
 
-  String? _validarNome(String? nome) {
-    String _nome = (nome ?? "").trim();
-    if (_nome.isEmpty) {
-      return "Informe um nome";
-    }
-    return null;
-  }
+  // String? _validarNome(String? name) {
+  //   String nome = (name ?? "").trim();
+  //   return (nome.isEmpty) ? "Informe um nome" : null;
+  // }
 
-  String? _validarAltura(String? altura) {
-    double _altura = formateNumber(altura ?? "");
+  String? _validarAltura(String? alt) {
+    double altura = formateNumber(alt ?? "");
 
-    if (_altura == 0 || _altura > 3) {
+    if (altura == 0 || altura > 3) {
       return "Informe uma altura válida ex: 1,60";
     }
     return null;
   }
 
   String? _validarPeso(String? peso) {
-    double _peso = formateNumber(peso ?? "");
+    double p = formateNumber(peso ?? "");
 
-    if (_peso == 0) {
+    if (p == 0) {
       return "Informe um peso Válido";
     }
     return null;

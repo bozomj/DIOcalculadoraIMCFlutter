@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:calculadora_imc/database/shared_db.dart';
 import 'package:calculadora_imc/model/calculo.dart';
 import 'package:calculadora_imc/model/pessoa.dart';
@@ -71,10 +69,10 @@ class _ListaCalculosPageState extends State<ListaCalculosPage> {
                           return AlertDialog(
                             title: Text(calculo.data.toString()),
                             actions: [
-                              TextButton(
+                              const TextButton(
                                 // onPressed: () => editarPessoa(pessoa, index),
                                 onPressed: null,
-                                child: const Text("Editar"),
+                                child: Text("Editar"),
                               ),
                               TextButton(
                                 onPressed: () {
@@ -102,7 +100,7 @@ class _ListaCalculosPageState extends State<ListaCalculosPage> {
                       ),
                       Text(
                         formatarData(calculo.data),
-                        style: TextStyle(),
+                        style: const TextStyle(),
                       ),
                     ],
                   ),
@@ -112,7 +110,7 @@ class _ListaCalculosPageState extends State<ListaCalculosPage> {
                     children: [
                       Text('${calculo.classificacao}'),
                       Text(
-                        'IMC: ${calculo.imc!.toStringAsFixed(2)}',
+                        'IMC: ${calculo.imc.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontSize: 13,
                         ),

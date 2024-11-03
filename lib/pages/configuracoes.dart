@@ -53,7 +53,9 @@ class _ConfiguracoesState extends State<Configuracoes> {
     return PopScope(
       canPop: pessoa != null,
       onPopInvokedWithResult: (didPop, result) {
-        if (pessoa == null) showAlertSnackBar('Voce deve Cadastrar uma Pessoa');
+        if (pessoa == null) {
+          showAlertSnackBar('Voce 1 deve Cadastrar uma Pessoa');
+        }
       },
       child: Scaffold(
         appBar: AppBar(
@@ -118,15 +120,11 @@ class _ConfiguracoesState extends State<Configuracoes> {
                         child: const Text("Cancelar")),
                     const VerticalDivider(),
                     ElevatedButton(
-                        onPressed: () {
-                          salvarCalcular().then((pessoa) {
-                            if (pessoa != null) {
-                              if (context.mounted) {
-                                Navigator.pop(context, pessoa);
-                              }
-                            }
-                            setState(() {});
-                          });
+                        onPressed: () async {
+                          await salvarCalcular();
+                          if (pessoa != null && context.mounted) {
+                            Navigator.pop(context, pessoa);
+                          }
                         },
                         child: const Text("Salvar")),
                   ],
@@ -147,19 +145,15 @@ class _ConfiguracoesState extends State<Configuracoes> {
     if (!formKey.currentState!.validate()) {
       showAlertSnackBar("Preencha todos os campos corretamente");
     } else {
-      Pessoa pessoa = Pessoa(nome: nome, altura: altura, peso: peso);
+      pessoa = Pessoa(nome: nome, altura: altura, peso: peso);
       SharedDB? db = SharedDB();
 
       try {
-        await db.salvar(pessoa);
+        await db.salvar(pessoa!);
         showSuccessSnackBar("Salvo com sucesso");
       } catch (e) {
         log(e.toString());
         showAlertSnackBar("Erro ao salvar");
-      }
-
-      if (mounted) {
-        Navigator.pop(context, pessoa);
       }
     }
   }
@@ -170,26 +164,26 @@ class _ConfiguracoesState extends State<Configuracoes> {
   }
 
   String? _validarNome(String? nome) {
-    String _nome = (nome ?? "").trim();
-    if (_nome.isEmpty) {
+    nome = (nome ?? "").trim();
+    if (nome.isEmpty) {
       return "Informe um nome";
     }
     return null;
   }
 
-  String? _validarAltura(String? altura) {
-    double _altura = formateNumber(altura ?? "");
+  String? _validarAltura(String? alt) {
+    double altura = formateNumber(alt ?? "");
 
-    if (_altura == 0 || _altura > 3) {
+    if (altura == 0 || altura > 3) {
       return "Informe uma altura válida ex: 1,60";
     }
     return null;
   }
 
-  String? _validarPeso(String? peso) {
-    double _peso = formateNumber(peso ?? "");
+  String? _validarPeso(String? ppeso) {
+    double peso = formateNumber(ppeso ?? "");
 
-    if (_peso == 0) {
+    if (peso == 0) {
       return "Informe um peso Válido";
     }
     return null;

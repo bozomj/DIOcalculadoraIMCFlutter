@@ -28,6 +28,8 @@ class Pessoa {
   String? get classificacao => _classificacaoIMC;
 
   set peso(p) => _peso = p;
+  set nome(nome) => _nome = nome;
+  set altura(altura) => _altura = altura;
 
   get calculoMap => {
         "data": DateTime.now().millisecondsSinceEpoch,
