@@ -28,7 +28,7 @@ class _ListaCalculosPageState extends State<ListaCalculosPage> {
   }
 
   updatePessoa() async {
-    pessoa = await SharedDB().getUser();
+    pessoa = await Pessoa.getSharedPreference();
 
     setState(() {});
   }

@@ -18,7 +18,7 @@ class _DrawerImcState extends State<DrawerImc> {
 
   getUser() async {
     try {
-      pessoa = await SharedDB().getUser();
+      pessoa = await Pessoa.getSharedPreference();
       setState(() {});
     } catch (e) {
       log(e.toString());

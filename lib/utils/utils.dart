@@ -23,7 +23,6 @@ Map<String, dynamic> colorIMC = {
   "Obesidade Grau III": Colors.amber[900],
 };
 
-// funcao recebe uma datetime e retorna data do brasil por extenso
 String formatarData(String txt) {
   int? datetime = int.tryParse(txt);
   var data = DateTime.fromMillisecondsSinceEpoch(datetime ?? 0);

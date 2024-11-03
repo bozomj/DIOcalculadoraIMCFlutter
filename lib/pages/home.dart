@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
                           ElevatedButton(
                               onPressed: () async =>
                                   await _salvarConsulta(context),
-                              child: const Text("Slavar")),
+                              child: const Text("Salvar")),
                         ],
                       );
                     },
@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
   Future<bool> getUser() async {
     bool rt = false;
     try {
-      pessoa = await SharedDB().getUser();
+      pessoa = await Pessoa.getSharedPreference();
       rt = true;
     } catch (e) {
       log(e.toString());

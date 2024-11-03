@@ -21,7 +21,7 @@ class _ConfiguracoesState extends State<Configuracoes> {
 
   Future<void> getUser() async {
     try {
-      pessoa = await SharedDB().getUser();
+      pessoa = await Pessoa.getSharedPreference();
 
       if (pessoa != null) {
         nomeController.text = pessoa!.nome;

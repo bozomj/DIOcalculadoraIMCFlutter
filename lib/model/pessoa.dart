@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calculadora_imc/database/database_sqflite.dart';
 import 'package:calculadora_imc/database/shared_db.dart';
 import 'package:sqflite/sqflite.dart';
@@ -20,6 +22,15 @@ class Pessoa {
         _peso = peso,
         _imc = imc,
         _classificacaoIMC = classificacaoIMC;
+
+  static Future<Pessoa?> getSharedPreference() async {
+    try {
+      return await SharedDB().getUser();
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
 
   String get nome => _nome;
   double get altura => _altura;
